@@ -37,7 +37,7 @@ else:
     logging.basicConfig(level=logging.WARNING, format="%(message)s")
 
 #Possible characters comprising text
-alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*()+-=,.:;/\\|<>"
+alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*()+-=,.:;/\\|<> "
 
 #Prepare file readers
 file_list_str = ""
