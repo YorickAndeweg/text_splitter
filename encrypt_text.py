@@ -39,7 +39,7 @@ else:
     logging.basicConfig(level=logging.WARNING, format="%(message)s")
 
 #Possible characters comprising text
-alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*()+-=,.:;/\\|<>"
+alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*()+-=,.:;/\\|<> "
 
 #Test file access
 logging.info("Accessing file '" + file_name + "'.")
