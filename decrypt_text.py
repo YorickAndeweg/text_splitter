@@ -1,10 +1,10 @@
-#Imports
+# Imports
 import argparse
 import logging
 import os
 import time
 
-#Argparse configuration
+# Argparse configuration
 parser = argparse.ArgumentParser(description="A simple program for encrypting and decrypting text files")
 parser.add_argument("-v",
                     "--verbose",
@@ -30,16 +30,22 @@ args = parser.parse_args()
 file_name = args.file
 n = args.number
 
-#Logging configuration
+# Logging configuration
 if args.verbose:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 else:
     logging.basicConfig(level=logging.WARNING, format="%(message)s")
 
-#Possible characters comprising text
+# Possible characters comprising text
 alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*()+-=,.:;/\\|<> "
 
-#Prepare file readers
+# Ensuring that n >= 2
+logging.info("Ensuring that number of files (-n, --number) is at least 2")
+if n < 2:
+    logging.error("Error: The number of files (-n, --number) should be at least 2. Exiting.")
+    sys.exit(2)
+
+# Prepare file readers
 file_list_str = ""
 for i in range(n):
     file_list_str += "'" + file_name + ".part" + str(i) + "', "
@@ -50,13 +56,13 @@ for i in range(n):
     reader = open(file_name + ".part" + str(i), "r")
     readers.append(reader)
 
-#Prepare output file
+# Prepare output file
 logging.info("Creating output file '" + file_name + "'.")
 writer = open(file_name, "w")
 writer.write("")
 appender = open(file_name, "a")
 
-#Read through lines in input readers and append decrypted lines to output files
+# Read through lines in input readers and append decrypted lines to output files
 logging.info("Reading encrypted files and writing decrypted contents to '" + file_name + "'...")
 start_time = time.time()
 reader0 = readers[0]
@@ -80,7 +86,7 @@ while not line0 == "":
 end_time = time.time()
 logging.info("Done with decryption (took " + str(end_time - start_time) + " seconds).")
 
-#Delete original undecrypted files
+# Delete original undecrypted files
 if not args.keep:
     for i in range(n):
         os.remove(file_name + ".part" + str(i))

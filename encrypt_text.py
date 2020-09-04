@@ -1,4 +1,4 @@
-#Imports
+# Imports
 import argparse
 import logging
 import secrets
@@ -6,7 +6,7 @@ import math
 import os
 import time
 
-#Argparse configuration
+# Argparse configuration
 parser = argparse.ArgumentParser(description="A simple program for encrypting and decrypting text files")
 parser.add_argument("-v",
                     "--verbose",
@@ -32,21 +32,27 @@ args = parser.parse_args()
 file_name = args.file
 n = args.number
 
-#Logging configuration
+# Logging configuration
 if args.verbose:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 else:
     logging.basicConfig(level=logging.WARNING, format="%(message)s")
 
-#Possible characters comprising text
+# Possible characters comprising text
 alph = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*()+-=,.:;/\\|<> "
 
-#Test file access
+# Ensuring that n >= 2
+logging.info("Ensuring that number of files (-n, --number) is at least 2")
+if n < 2:
+    logging.error("Error: The number of files (-n, --number) should be at least 2. Exiting.")
+    sys.exit(2)
+
+# Prepare file reader
 logging.info("Accessing file '" + file_name + "'.")
 reader = open(file_name, "r")
 line = reader.readline()
 
-#Prepare output files
+# Prepare output files
 info_message = "Created the following output files:"
 appenders = []
 for i in range(n):
@@ -59,7 +65,7 @@ for i in range(n):
 info_message = info_message[:len(info_message) - 1] + "."
 logging.info(info_message)
 
-#Loop through lines in target file and append encrypted lines to output files
+# Loop through lines in target file and append encrypted lines to output files
 logging.info("Reading file '" + file_name + "' and writing encrypted contents to output files...")
 start_time = time.time()
 while line != "":
@@ -88,7 +94,7 @@ while line != "":
 end_time = time.time()
 logging.info("Done with encryption (took " + str(end_time - start_time) + " seconds).")
 
-#Delete original unencrypted file
+# Delete original unencrypted file
 if not args.keep:
     os.remove(file_name)
     logging.info("Removed original unencrypted file '" + file_name + "'.")
